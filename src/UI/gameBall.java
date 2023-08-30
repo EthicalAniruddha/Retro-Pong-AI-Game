@@ -9,7 +9,7 @@ public class gameBall extends Rectangle {
     Random random;
     int xVelocity; // Velocity on it's x-axis
     int yVelocity; // Velocity on it's y-axis
-    int initialSpeed = 2;
+    short initialSpeed = 6;
 
     public gameBall(int x, int y, int width, int height) {
 
@@ -33,7 +33,7 @@ public class gameBall extends Rectangle {
         setYDirection(randomYDirection * initialSpeed); // increases the yVelocity of the ball by 2
     }
 
-    // when the game starts the ball should move in random direction
+    /* when the game starts the ball should move in random direction */
 
     // for setting the x-direction of the ball
     public void setXDirection(int randomXDirection) {
@@ -53,7 +53,7 @@ public class gameBall extends Rectangle {
         y += yVelocity;
     }
 
-    public void draw(Graphics g) {
+    public void draw(@org.jetbrains.annotations.NotNull Graphics g) {
 
         g.setColor(Color.white);
         g.fillOval(x, y, height, width); // it should be width then height, but since we want to bounce it from top and bottom edges I have written first height then width

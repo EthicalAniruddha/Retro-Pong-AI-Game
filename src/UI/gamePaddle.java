@@ -39,6 +39,7 @@ public class gamePaddle extends Rectangle {
         g.fillRect(x, y, width, height);
     }
 
+    // Control of humanPaddle by user and depending upon user input
     public void keyPressed(KeyEvent kE) {
 
         if (kE.getKeyCode() == KeyEvent.VK_UP || kE.getKeyCode() == KeyEvent.VK_W) {
@@ -60,20 +61,5 @@ public class gamePaddle extends Rectangle {
         if (kE.getKeyCode() == KeyEvent.VK_DOWN || kE.getKeyCode() == KeyEvent.VK_S) {
             setYDirection(0);
         }
-    }
-
-    // Add AI controller logic here
-    public void aiMove(int ballY) {
-        // Implement your AI logic here
-        // For example, you can make the AI follow the ball's Y position
-        // You may want to adjust this logic based on your game's requirements
-        if (y < ballY) {
-            setYDirection(Constants.PADDLE_SPEED);
-        } else if (y > ballY) {
-            setYDirection(-Constants.PADDLE_SPEED);
-        } else {
-            setYDirection(0); // Stop if the AI paddle is aligned with the ball
-        }
-        move();
     }
 }

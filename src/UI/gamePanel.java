@@ -1,12 +1,15 @@
 package UI;
 
 import Constants.Constants;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+
+import static Audio.Audio.playSound;
 
 public class gamePanel extends JPanel implements Runnable {
 
@@ -37,8 +40,9 @@ public class gamePanel extends JPanel implements Runnable {
 
     // To reset the game
     public void newGamePaddle() {
-        humanPaddle = new gamePaddle(0, (Constants.HEIGHT / 2) - (Constants.PADDLE_HEIGHT / 2), Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, "human");
-        aiPaddle = new gamePaddle((Constants.WIDTH - Constants.PADDLE_WIDTH), (Constants.HEIGHT / 2) - (Constants.PADDLE_HEIGHT / 2), Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, "ai");
+        humanPaddle = new gamePaddle(10, (Constants.HEIGHT / 2) - (Constants.PADDLE_HEIGHT / 2), Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, "human");
+        aiPaddle = new gamePaddle((Constants.WIDTH - Constants.PADDLE_WIDTH) - 10, (Constants.HEIGHT / 2) - (Constants.PADDLE_HEIGHT / 2), Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, "ai");
+        Constants.PADDLE_SPEED = 15;
     }
 
     // To call a new Ball
@@ -49,7 +53,7 @@ public class gamePanel extends JPanel implements Runnable {
     }
 
     // To paint and draw or make the gameFrame attractive
-    public void paint(Graphics g) {
+    public void paint(@NotNull Graphics g) {
 
         image = createImage(getWidth(), getHeight());
         graphics = image.getGraphics();
@@ -89,6 +93,17 @@ public class gamePanel extends JPanel implements Runnable {
         aiPaddle.move();
     }
 
+    // If the user wants to choose difficulty
+    public void changeSpeed() {
+
+        ball.xVelocity++; // We increase its speed by 1
+            if (ball.yVelocity > 0) {
+                ball.yVelocity++; // for more difficulty I increased its speed
+            } else {
+                ball.yVelocity--; // for more difficulty I increased its speed
+            }
+    }
+
     // Checking the collision of gameBall with boundaries or paddles
     public void checkCollision() {
         /* Stops paddle at edges */
@@ -109,7 +124,7 @@ public class gamePanel extends JPanel implements Runnable {
         }
 
         /* Let's bounce the ball from the top and bottom edges */
-        if(ball.y <=0) {
+        if(ball.y <= 0) {
 			ball.setYDirection(-ball.yVelocity);
 		}
 		if(ball.y >= Constants.HEIGHT - Constants.BALL_DIAMETER) {
@@ -120,12 +135,13 @@ public class gamePanel extends JPanel implements Runnable {
 
         // for humanPaddle
         if (ball.intersects(humanPaddle)) {
+
+            Constants.PADDLE_SPEED++;
+
             ball.xVelocity = Math.abs(ball.xVelocity); // changing negative to positive
-            ball.xVelocity++; // We increase its speed by 1
-            if (ball.yVelocity > 0) {
-                ball.yVelocity++; // for more difficulty I increased its speed
-            } else {
-                ball.yVelocity--; // for more difficulty I increased its speed
+
+            if (Constants.CHOOSE.equals("Y") || Constants.CHOOSE.equals("y")) {
+                changeSpeed();
             }
 
             ball.setXDirection(ball.xVelocity);
@@ -134,12 +150,11 @@ public class gamePanel extends JPanel implements Runnable {
 
         // for aiPaddle
         if (ball.intersects(aiPaddle)) {
+
             ball.xVelocity = Math.abs(ball.xVelocity); // changing negative to positive
-            ball.xVelocity++; // We increase its speed by 1
-            if (ball.yVelocity > 0) {
-                ball.yVelocity++; // for more difficulty I increased its speed
-            } else {
-                ball.yVelocity--; // for more difficulty I increased its speed
+
+            if (Constants.CHOOSE.equals("Y") || Constants.CHOOSE.equals("y")) {
+                changeSpeed();
             }
 
             ball.setXDirection(-ball.xVelocity);
@@ -151,14 +166,19 @@ public class gamePanel extends JPanel implements Runnable {
         // if the ball touches the left boundary, then AI scores a point
         if (ball.x <= 0) {
             score.aiPlayer++;
+            Constants.PADDLE_SPEED = 15;
+            playSound("src/Sounds/Score.wav");
             newGameBall();
         }
 
         // if the ball touches the right boundary, then human player scores a point
         if (ball.x >= (Constants.WIDTH - Constants.BALL_DIAMETER)) {
             score.humanPlayer++;
+            Constants.PADDLE_SPEED = 15;
+            playSound("src/Sounds/Score.wav");
             newGameBall();
         }
+
     }
 
     // To run the game we need a method run
@@ -167,7 +187,7 @@ public class gamePanel extends JPanel implements Runnable {
         // Game loop
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
-        double nanoSeconds = 1000000000 / amountOfTicks;
+        double nanoSeconds = 2094222720 / amountOfTicks;
         double delta = 0.0;
 
         while (true) {

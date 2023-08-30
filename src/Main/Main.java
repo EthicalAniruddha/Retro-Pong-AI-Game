@@ -1,11 +1,11 @@
 package Main;
 
-import UI.gameFrame;
+import UI_Open_Window.loadingScreen;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        new gameFrame();
+        new loadingScreen();
     }
 }
