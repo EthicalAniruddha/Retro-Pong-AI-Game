@@ -9,7 +9,7 @@ public class gameBall extends Rectangle {
     Random random;
     int xVelocity; // Velocity on it's x-axis
     int yVelocity; // Velocity on it's y-axis
-    short initialSpeed = 6;
+    short initialSpeed = 9;
 
     public gameBall(int x, int y, int width, int height) {
 

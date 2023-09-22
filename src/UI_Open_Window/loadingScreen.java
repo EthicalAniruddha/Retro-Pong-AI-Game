@@ -81,12 +81,12 @@ public class loadingScreen {
 
             counter++;
 
-            if (counter == 35) {
+            if (counter == 15) {
                  playSound("src/Sounds/open.wav");
             }
 
             if (counter == 65) {
-                Constants.SOUND = JOptionPane.showInputDialog(frame, "Wanna Have Background Sound? Enter 'y' to have it or 'n' to not.", null);
+                Constants.SOUND = JOptionPane.showInputDialog(frame, "Wanna Have Background Music? Enter 'y' to have it or 'n' to not.", null);
             }
 
             if (counter == 95) {

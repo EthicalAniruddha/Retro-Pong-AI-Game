@@ -1,5 +1,3 @@
-/** To Play Audio for entertaining purpose */
-
 package Audio;
 
 import javax.sound.sampled.*;
@@ -10,9 +8,11 @@ public class Audio {
 
     public static void playSound(String filePath) {
 
+        File audio = new File(filePath);
+
         AudioInputStream audioInputStream;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
+            audioInputStream = AudioSystem.getAudioInputStream(audio);
         } catch (UnsupportedAudioFileException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -29,6 +29,7 @@ public class Audio {
         } catch (LineUnavailableException | IOException e) {
             throw new RuntimeException(e);
         }
+
         clip.start();
     }
 }

@@ -200,6 +200,9 @@ public class gamePanel extends JPanel implements Runnable {
                 move();
                 checkCollision();
                 repaint();
+                if (Constants.BREAK) {
+                    break;
+                }
                 delta--;
             }
         }

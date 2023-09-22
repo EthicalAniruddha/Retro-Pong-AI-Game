@@ -39,15 +39,19 @@ public class gameFrame extends JFrame {
             playSound("src/Sounds/background.wav");
         }
 
-        closeFrameAfter5Minutes();
+        closeFrameAfter_1_Minute();
     }
 
-    public void closeFrameAfter5Minutes() {
+    public void closeFrameAfter_1_Minute() {
 
-        Timer timer = new Timer(5 * 60 * 1000, e -> showTimeUpFrame());
+        Timer timer = new Timer(60 * 1000, e -> showTimeUpFrame());
+        Timer Breaker = new Timer(60 * 1000, e -> Constants.BREAK = true);
 
         timer.setRepeats(false);
         timer.start();
+
+        Breaker.setRepeats(false);
+        Breaker.start();
     }
 
     public void showTimeUpFrame() {
